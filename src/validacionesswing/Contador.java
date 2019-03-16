@@ -14,28 +14,25 @@ public class Contador {
     int contador;
 
     public String[] contadorPalabras(String frase) {
-   
-      String[] palabras = frase.split("\\W");
-      return palabras;
-      
-       /*   int finalCadena = frase.length() - 1;
-       boolean palabra = false;
-        
-        for (int x = 0; x < frase.length(); x++) {
-            if (Character.isLetter(frase.charAt(x)) && x != finalCadena) {
-                palabra = true;
-            } else if (!Character.isLetter(frase.charAt(x)) && palabra) {
-                contador++;
-            }else if(Character.isLetter(frase.charAt(x)) && x == finalCadena){
-                contador++;
-            }
-        }*/
-      
-      
+
+        String[] palabras = frase.split("\\W");
+        return palabras;
+
     }
 
-    public void contadorLetras() {
+    public String[] contadorLetras(String sPalabra) {
 
+        String[] Letras = new String[sPalabra.length()];
+
+        for (int x = 0; x < sPalabra.length(); x++) {
+            if (Character.isLetter(sPalabra.charAt(x))) {
+                contador++;
+
+                Letras[x] = String.valueOf(sPalabra.charAt(x));
+            }
+            
+        }
+        return Letras;
     }
 
 }

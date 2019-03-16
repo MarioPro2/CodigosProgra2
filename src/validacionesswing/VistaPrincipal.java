@@ -21,11 +21,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
      * Creates new form VistaPrincipal
      */
     final DefaultListModel model = new DefaultListModel();
-    
+
     public VistaPrincipal() {
         initComponents();
 
-     
         btnEnviar.setEnabled(false);
         rbgAcciones.add(rbtnLetras);
         rbgAcciones.add(rbtnPalabra);
@@ -62,6 +61,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         lstElementos = new javax.swing.JList<>();
         rbtnPalabra = new javax.swing.JRadioButton();
         rbtnLetras = new javax.swing.JRadioButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -71,6 +71,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jList1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtString.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStringActionPerformed(evt);
+            }
+        });
 
         btnEnviar.setText("Enviar");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
@@ -82,31 +88,44 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lstElementos);
 
         rbtnPalabra.setText("Palabras");
+        rbtnPalabra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnPalabraActionPerformed(evt);
+            }
+        });
 
-        rbtnLetras.setText("letras");
+        rbtnLetras.setText("Letras");
+
+        jCheckBox1.setText("Ordenar");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(rbtnPalabra)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEnviar)
+                    .addComponent(rbtnLetras))
+                .addGap(37, 37, 37)
+                .addComponent(jCheckBox1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(txtString, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(btnEnviar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(rbtnPalabra)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtnLetras))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtString, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,12 +135,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbtnPalabra)
-                    .addComponent(rbtnLetras))
-                .addGap(28, 28, 28)
+                    .addComponent(rbtnLetras)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addComponent(btnEnviar)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,15 +155,33 @@ public class VistaPrincipal extends javax.swing.JFrame {
             for (String a : listaPalabras) {
                 System.out.println(a);
                 model.addElement(a);
-              }
-            
-        } else if(rbtnLetras.isSelected()) {
+            }
 
+        } else if (rbtnLetras.isSelected()) {
+            String[] listaLetras = contador.contadorLetras(txtString.getText());
+
+            for (String a : listaLetras) {
+                System.out.println(a);
+                model.addElement(a);
+            }
         }
-        
+
         lstElementos.setModel(model);
-      
+
+
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void txtStringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStringActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStringActionPerformed
+
+    private void rbtnPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPalabraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnPalabraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,6 +220,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
